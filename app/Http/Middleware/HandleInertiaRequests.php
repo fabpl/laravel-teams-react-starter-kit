@@ -51,7 +51,7 @@ final class HandleInertiaRequests extends Middleware
 
         return array_merge($parent, [
             'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
+            'quote' => ['message' => mb_trim($message), 'author' => mb_trim($author)],
             'auth' => function () use ($request): array {
                 if (! $request->user()) {
                     return [
