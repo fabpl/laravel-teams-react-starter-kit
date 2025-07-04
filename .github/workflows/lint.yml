@@ -33,7 +33,7 @@ jobs:
         run: composer lint
 
       - name: Refactor PHP
-        run: composer rector
+        run: composer refactor
 
       - name: Format Frontend
         run: npm run format
