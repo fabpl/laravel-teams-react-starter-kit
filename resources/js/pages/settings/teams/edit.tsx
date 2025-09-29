@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { edit } from '@/routes/teams';
+import { edit, update } from '@/routes/teams';
 import { type BreadcrumbItem, type Paginated, type SharedData, type Team, type TeamMember } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head, usePage } from '@inertiajs/react';
@@ -30,7 +30,7 @@ export default function Edit({ team }: { team: Team; members: Paginated<TeamMemb
                 <div className="space-y-6">
                     <HeadingSmall title="Team information" description="Update your team's name." />
 
-                    <Form className="space-y-6">
+                    <Form {...update.form(team)} className="space-y-6">
                         {({ processing, recentlySuccessful, errors }) => (
                             <>
                                 <div className="grid gap-2">

@@ -40,7 +40,7 @@ test('member can be updated', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 
     /** @var User $member */
     $member = $team->users()->where('email', $member->email)->first();
@@ -66,7 +66,7 @@ test('member can be deleted', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 
     /** @var User $member */
     $member = $team->users()->where('email', $member->email)->first();
@@ -94,7 +94,7 @@ test('users can leave teams', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 
     $member = $team->users()->where('email', $member->email)->first();
 

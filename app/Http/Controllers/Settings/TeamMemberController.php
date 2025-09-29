@@ -23,7 +23,7 @@ final class TeamMemberController extends Controller
      */
     public function index(Request $request, Team $team): Response
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         Gate::forUser($user)->authorize('update', $team);
@@ -47,7 +47,7 @@ final class TeamMemberController extends Controller
 
         $updateTeamMember->handle($user, $team, $member, $input);
 
-        return to_route('teams.edit', [
+        return to_route('teams.members', [
             'team' => $team,
         ]);
     }
@@ -62,7 +62,7 @@ final class TeamMemberController extends Controller
 
         $deleteTeamMember->handle($user, $team, $member);
 
-        return to_route('teams.edit', [
+        return to_route('teams.members', [
             'team' => $team,
         ]);
     }

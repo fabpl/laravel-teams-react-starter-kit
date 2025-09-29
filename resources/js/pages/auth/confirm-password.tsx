@@ -1,9 +1,9 @@
-import { store } from '@/actions/App/Http/Controllers/Auth/ConfirmablePasswordController';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import { confirm } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export default function ConfirmPassword() {
         >
             <Head title="Confirm password" />
 
-            <Form {...store.form()} resetOnSuccess={['password']} className="space-y-6">
+            <Form {...confirm.form()} resetOnSuccess={['password']} className="space-y-6">
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-2">

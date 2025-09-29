@@ -1,8 +1,8 @@
-import { store } from '@/actions/App/Http/Controllers/Auth/EmailVerificationNotificationController';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
+import { send } from '@/routes/verification';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -17,7 +17,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 </div>
             )}
 
-            <Form {...store.form()} className="space-y-6 text-center">
+            <Form {...send.form()} className="space-y-6 text-center">
                 {({ processing }) => (
                     <>
                         <Button disabled={processing} variant="secondary">

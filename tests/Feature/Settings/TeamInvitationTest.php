@@ -22,7 +22,7 @@ test('invitation can be created', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 
     expect($team->invitations->count())->toBe(1);
 
@@ -45,7 +45,7 @@ test('invitation can not be created for member', function () {
 
     $response = $this
         ->actingAs($user)
-        ->from('/settings/teams/'.$team->id.'/edit')
+        ->from('/settings/teams/'.$team->id.'/members')
         ->post('/settings/teams/'.$team->id.'/invitations', [
             'email' => $member->email,
             'role' => 'collaborator',
@@ -53,7 +53,7 @@ test('invitation can not be created for member', function () {
 
     $response
         ->assertSessionHasErrors(['email'])
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 });
 
 test('invitation can be deleted', function () {
@@ -71,7 +71,7 @@ test('invitation can be deleted', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/teams/'.$team->id.'/edit');
+        ->assertRedirect('/settings/teams/'.$team->id.'/members');
 
     expect($invitation->fresh())->toBeNull();
 });

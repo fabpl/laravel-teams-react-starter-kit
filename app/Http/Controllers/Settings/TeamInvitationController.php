@@ -28,7 +28,7 @@ final class TeamInvitationController extends Controller
 
         $inviteTeamMember->handle($user, $team, $input);
 
-        return to_route('teams.edit', [
+        return to_route('teams.members', [
             'team' => $team,
         ]);
     }
@@ -43,7 +43,7 @@ final class TeamInvitationController extends Controller
 
         $deleteTeamInvitation->handle($user, $invitation);
 
-        return to_route('teams.edit', [
+        return to_route('teams.members', [
             'team' => $invitation->team,
         ]);
     }

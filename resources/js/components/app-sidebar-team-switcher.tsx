@@ -1,5 +1,3 @@
-import { update } from '@/actions/App/Http/Controllers/Settings/CurrentTeamController';
-import { create } from '@/actions/App/Http/Controllers/Settings/TeamController';
 import AppLogoIcon from '@/components/app-logo-icon';
 import {
     DropdownMenu,
@@ -10,6 +8,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { update } from '@/routes/current-team';
+import { create } from '@/routes/teams';
 import type { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Check, ChevronsUpDown, Plus } from 'lucide-react';

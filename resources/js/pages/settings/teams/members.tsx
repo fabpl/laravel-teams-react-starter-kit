@@ -1,5 +1,3 @@
-import { destroy as destroyInvitation } from '@/actions/App/Http/Controllers/Settings/TeamInvitationController';
-import { destroy, update } from '@/actions/App/Http/Controllers/Settings/TeamMemberController';
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import InviteTeamMember from '@/components/invite-team-member';
@@ -13,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { destroy as destroyInvitation } from '@/routes/team-invitations';
+import { destroy as destroyMember, update } from '@/routes/team-members';
 import { members as membersRoute } from '@/routes/teams';
 import { type BreadcrumbItem, type Paginated, type SharedData, type Team, type TeamMember } from '@/types';
 import { Form, Head, usePage } from '@inertiajs/react';
@@ -225,7 +225,7 @@ export default function Members({ team, members }: { team: Team; members: Pagina
                             <DialogFooter>
                                 {deletingTeamMemberFor && deletingTeamMemberFor.user_id && (
                                     <Form
-                                        {...destroy.form([team, { id: deletingTeamMemberFor.user_id }])}
+                                        {...destroyMember.form([team, { id: deletingTeamMemberFor.user_id }])}
                                         options={{ preserveScroll: true }}
                                         onSuccess={() => closeDeletingTeamMemberModal()}
                                     >
