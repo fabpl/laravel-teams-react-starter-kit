@@ -53,7 +53,6 @@ final class TeamController extends Controller
 
         return Inertia::render('settings/teams/edit', [
             'team' => $team,
-            'members' => $team->members()->orderBy('email')->paginate(),
         ]);
     }
 

@@ -1,24 +1,24 @@
 import DeleteTeam from '@/components/delete-team';
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
-import TeamMembers from '@/components/team-members';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { edit } from '@/routes/teams';
 import { type BreadcrumbItem, type Paginated, type SharedData, type Team, type TeamMember } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Form, Head, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
-export default function Edit({ team, members }: { team: Team; members: Paginated<TeamMember> }) {
+export default function Edit({ team }: { team: Team; members: Paginated<TeamMember> }) {
     const { auth } = usePage<SharedData>().props;
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Team settings',
-            href: '/settings/teams/' + team.id + '/edit',
+            href: edit(team).url,
         },
     ];
 
@@ -68,8 +68,6 @@ export default function Edit({ team, members }: { team: Team; members: Paginated
                         )}
                     </Form>
                 </div>
-
-                <TeamMembers team={team} members={members} />
 
                 {auth.permissions.includes('team.delete') && <DeleteTeam team={team} />}
             </SettingsLayout>

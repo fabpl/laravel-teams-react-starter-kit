@@ -6,6 +6,19 @@ use App\Enums\TeamRoles;
 use App\Models\Team;
 use App\Models\User;
 
+test('team members page is displayed', function () {
+    $user = User::factory()->withTeam()->create();
+
+    /** @var Team $team */
+    $team = $user->currentTeam;
+
+    $response = $this
+        ->actingAs($user)
+        ->get('/settings/teams/'.$team->id.'/members');
+
+    $response->assertOk();
+});
+
 test('member can be updated', function () {
     /** @var User $user */
     $user = User::factory()->withTeam()->create();

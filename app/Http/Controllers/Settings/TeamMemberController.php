@@ -11,10 +11,29 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Inertia\Response;
 use Throwable;
 
 final class TeamMemberController extends Controller
 {
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function index(Request $request, Team $team): Response
+    {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        Gate::forUser($user)->authorize('update', $team);
+
+        return Inertia::render('settings/teams/members', [
+            'team' => $team,
+            'members' => $team->members()->orderBy('email')->paginate(),
+        ]);
+    }
+
     /**
      * @throws Throwable
      */

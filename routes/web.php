@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
             Route::put('settings/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
 
             Route::get('settings/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+            Route::get('settings/teams/{team}/members', [TeamMemberController::class, 'index'])->name('teams.members');
             Route::delete('settings/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
             Route::patch('settings/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
 

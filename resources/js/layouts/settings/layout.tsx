@@ -2,10 +2,10 @@ import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { edit } from '@/routes/teams';
+import { edit, members } from '@/routes/teams';
 import { type NavGroup, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Palette, RectangleEllipsis, User, Users } from 'lucide-react';
+import { Palette, RectangleEllipsis, Settings2, User, Users } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
@@ -41,6 +41,11 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                 {
                     title: 'Settings',
                     href: edit(auth.currentTeam).url,
+                    icon: Settings2,
+                },
+                {
+                    title: 'Members',
+                    href: members(auth.currentTeam).url,
                     icon: Users,
                 },
             ],
