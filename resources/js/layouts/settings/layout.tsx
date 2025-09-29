@@ -2,6 +2,7 @@ import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { edit } from '@/routes/teams';
 import { type NavGroup, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Palette, RectangleEllipsis, User, Users } from 'lucide-react';
@@ -39,7 +40,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
             items: [
                 {
                     title: 'Settings',
-                    href: route('teams.edit', { team: auth.currentTeam }),
+                    href: edit(auth.currentTeam).url,
                     icon: Users,
                 },
             ],

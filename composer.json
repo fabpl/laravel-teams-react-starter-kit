@@ -14,7 +14,7 @@
         "inertiajs/inertia-laravel": "^2.0.10",
         "laravel/framework": "^12.31.1",
         "laravel/tinker": "^2.10.1",
-        "tightenco/ziggy": "^2.6"
+        "laravel/wayfinder": "^0.1.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

@@ -1,36 +1,17 @@
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef } from 'react';
-
+import { destroy } from '@/actions/App/Http/Controllers/Settings/TeamController';
+import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-import HeadingSmall from '@/components/heading-small';
-
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Team } from '@/types';
+import { Form } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { useRef } from 'react';
 
 export default function DeleteTeam({ team }: { team: Team }) {
     const passwordInput = useRef<HTMLInputElement>(null);
-    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
-
-    const deleteTeam: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        destroy(route('teams.destroy', { team: team }), {
-            preserveScroll: true,
-            onSuccess: () => closeModal(),
-            onError: () => passwordInput.current?.focus(),
-            onFinish: () => reset(),
-        });
-    };
-
-    const closeModal = () => {
-        clearErrors();
-        reset();
-    };
 
     return (
         <div className="space-y-6">
@@ -51,39 +32,49 @@ export default function DeleteTeam({ team }: { team: Team }) {
                             Once your team is deleted, all of its resources and data will also be permanently deleted. Please enter your password to
                             confirm you would like to permanently delete your team.
                         </DialogDescription>
-                        <form className="space-y-6" onSubmit={deleteTeam}>
-                            <div className="grid gap-2">
-                                <Label htmlFor="password" className="sr-only">
-                                    Password
-                                </Label>
+                        <Form
+                            {...destroy.form(team)}
+                            options={{
+                                preserveScroll: true,
+                            }}
+                            onError={() => passwordInput.current?.focus()}
+                            resetOnSuccess
+                            className="space-y-6"
+                        >
+                            {({ resetAndClearErrors, processing, errors }) => (
+                                <>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="password" className="sr-only">
+                                            Password
+                                        </Label>
 
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    ref={passwordInput}
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="Password"
-                                    autoComplete="current-password"
-                                />
+                                        <Input
+                                            id="password"
+                                            type="password"
+                                            name="password"
+                                            ref={passwordInput}
+                                            placeholder="Password"
+                                            autoComplete="current-password"
+                                        />
 
-                                <InputError message={errors.password} />
-                            </div>
+                                        <InputError message={errors.password} />
+                                    </div>
 
-                            <DialogFooter className="gap-2">
-                                <DialogClose asChild>
-                                    <Button variant="secondary" onClick={closeModal}>
-                                        Cancel
-                                    </Button>
-                                </DialogClose>
+                                    <DialogFooter className="gap-2">
+                                        <DialogClose asChild>
+                                            <Button variant="secondary" onClick={() => resetAndClearErrors()}>
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
 
-                                <Button variant="destructive" disabled={processing} type="submit">
-                                    {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                    Delete team
-                                </Button>
-                            </DialogFooter>
-                        </form>
+                                        <Button variant="destructive" disabled={processing} type="submit">
+                                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                            Delete team
+                                        </Button>
+                                    </DialogFooter>
+                                </>
+                            )}
+                        </Form>
                     </DialogContent>
                 </Dialog>
             </div>

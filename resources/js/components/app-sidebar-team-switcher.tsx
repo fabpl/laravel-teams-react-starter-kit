@@ -1,6 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
-import { Check, ChevronsUpDown, Plus } from 'lucide-react';
-
+import { update } from '@/actions/App/Http/Controllers/Settings/CurrentTeamController';
+import { create } from '@/actions/App/Http/Controllers/Settings/TeamController';
 import AppLogoIcon from '@/components/app-logo-icon';
 import {
     DropdownMenu,
@@ -12,6 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import type { SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { Check, ChevronsUpDown, Plus } from 'lucide-react';
 
 export function AppSidebarTeamSwitcher() {
     const { auth } = usePage<SharedData>().props;
@@ -48,7 +49,7 @@ export function AppSidebarTeamSwitcher() {
                                         <Check className="ml-auto size-4" />
                                     </>
                                 ) : (
-                                    <Link className="w-full text-left" data={{ team_id: team.id }} href={route('current-team.update')} method="put">
+                                    <Link className="w-full text-left" data={{ team_id: team.id }} href={update()} method="put">
                                         {team.name}
                                     </Link>
                                 )}
@@ -56,7 +57,7 @@ export function AppSidebarTeamSwitcher() {
                         ))}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                            <Link className="gap-2 p-2" href={route('teams.create')} prefetch>
+                            <Link className="gap-2 p-2" href={create()} prefetch>
                                 <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                                     <Plus className="size-4" />
                                 </div>

@@ -1,3 +1,5 @@
+import { destroy as destroyInvitation } from '@/actions/App/Http/Controllers/Settings/TeamInvitationController';
+import { destroy, update } from '@/actions/App/Http/Controllers/Settings/TeamMemberController';
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import InviteTeamMember from '@/components/invite-team-member';
@@ -9,14 +11,10 @@ import { Label } from '@/components/ui/label';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { type Paginated, type SharedData, type Team, type TeamMember, TeamRoles } from '@/types';
-import { useForm, usePage } from '@inertiajs/react';
+import { type Paginated, type SharedData, type Team, type TeamMember } from '@/types';
+import { Form, usePage } from '@inertiajs/react';
 import { Ellipsis, LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
-
-type UpdateTeamMemberForm = {
-    role: string;
-};
 
 export default function TeamMembers({ team, members }: { team: Team; members: Paginated<TeamMember> }) {
     const { auth } = usePage<SharedData>().props;
@@ -27,22 +25,6 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
     const updatingTeamMember = (member: TeamMember) => {
         setUpdatingTeamMemberFor(member);
         setOpenUpdatingTeamMember(true);
-        updateTeamMemberForm.setData('role', member.role);
-    };
-
-    const updateTeamMemberForm = useForm<Required<UpdateTeamMemberForm>>({
-        role: '',
-    });
-
-    const updateTeamMember = () => {
-        if (!updatingTeamMemberFor) {
-            return;
-        }
-
-        updateTeamMemberForm.patch(route('team-members.update', { team: team, member: updatingTeamMemberFor.user_id }), {
-            preserveScroll: true,
-            onSuccess: () => closeTeamMemberModal(),
-        });
     };
 
     const closeTeamMemberModal = () => {
@@ -58,19 +40,6 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
         setOpenDeletingTeamInvitation(true);
     };
 
-    const deleteTeamInvitationForm = useForm();
-
-    const deleteTeamInvitation = () => {
-        if (!deletingTeamInvitationFor) {
-            return;
-        }
-
-        deleteTeamInvitationForm.delete(route('team-invitations.destroy', { invitation: deletingTeamInvitationFor.invitation_id }), {
-            preserveScroll: true,
-            onSuccess: () => closeTeamInvitationModal(),
-        });
-    };
-
     const closeTeamInvitationModal = () => {
         setDeletingTeamInvitationFor(null);
         setOpenDeletingTeamInvitation(false);
@@ -82,25 +51,6 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
     const deletingTeamMember = (member: TeamMember) => {
         setDeletingTeamMemberFor(member);
         setOpenDeletingTeamMember(true);
-    };
-
-    const deleteTeamMemberForm = useForm();
-
-    const deleteTeamMember = () => {
-        if (!deletingTeamMemberFor) {
-            return;
-        }
-
-        deleteTeamMemberForm.delete(
-            route('team-members.destroy', {
-                team: team,
-                member: deletingTeamMemberFor.user_id,
-            }),
-            {
-                preserveScroll: true,
-                onSuccess: () => closeDeletingTeamMemberModal(),
-            },
-        );
     };
 
     const closeDeletingTeamMemberModal = () => {
@@ -183,10 +133,22 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
                     </DialogHeader>
 
                     <DialogFooter>
-                        <Button disabled={deleteTeamInvitationForm.processing} onClick={() => deleteTeamInvitation()} type="button">
-                            {deleteTeamInvitationForm.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Cancel
-                        </Button>
+                        {deletingTeamInvitationFor && deletingTeamInvitationFor.invitation_id && (
+                            <Form
+                                {...destroyInvitation.form({ invitation: deletingTeamInvitationFor.invitation_id })}
+                                options={{ preserveScroll: true }}
+                                onSuccess={() => closeTeamInvitationModal()}
+                            >
+                                {({ processing }) => (
+                                    <>
+                                        <Button disabled={processing} type="submit">
+                                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                            Cancel
+                                        </Button>
+                                    </>
+                                )}
+                            </Form>
+                        )}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -198,33 +160,42 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
                         <DialogDescription></DialogDescription>
                     </DialogHeader>
 
-                    <div className="grid gap-6">
-                        <Label className="sr-only" htmlFor="role">
-                            Role
-                        </Label>
-
-                        <Select
-                            onValueChange={(role) => updateTeamMemberForm.setData('role', role as TeamRoles)}
-                            defaultValue={updateTeamMemberForm.data.role}
+                    {updatingTeamMemberFor && updatingTeamMemberFor.user_id && (
+                        <Form
+                            {...update.form([team, { id: updatingTeamMemberFor.user_id }])}
+                            options={{ preserveScroll: true }}
+                            onSuccess={() => closeTeamMemberModal()}
                         >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select role" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="admin">Admin</SelectItem>
-                                <SelectItem value="collaborator">Collaborator</SelectItem>
-                            </SelectContent>
-                        </Select>
+                            {({ processing, errors }) => (
+                                <>
+                                    <div className="grid gap-6">
+                                        <Label className="sr-only" htmlFor="role">
+                                            Role
+                                        </Label>
 
-                        <InputError className="mt-2" message={updateTeamMemberForm.errors.role} />
-                    </div>
+                                        <Select name="role" defaultValue={updatingTeamMemberFor?.role}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select role" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="admin">Admin</SelectItem>
+                                                <SelectItem value="collaborator">Collaborator</SelectItem>
+                                            </SelectContent>
+                                        </Select>
 
-                    <DialogFooter>
-                        <Button disabled={updateTeamMemberForm.processing} onClick={() => updateTeamMember()} type="button">
-                            {updateTeamMemberForm.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Save
-                        </Button>
-                    </DialogFooter>
+                                        <InputError className="mt-2" message={errors.role} />
+                                    </div>
+
+                                    <DialogFooter>
+                                        <Button disabled={processing} type="submit">
+                                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                            Save
+                                        </Button>
+                                    </DialogFooter>
+                                </>
+                            )}
+                        </Form>
+                    )}
                 </DialogContent>
             </Dialog>
 
@@ -236,10 +207,22 @@ export default function TeamMembers({ team, members }: { team: Team; members: Pa
                     </DialogHeader>
 
                     <DialogFooter>
-                        <Button disabled={deleteTeamMemberForm.processing} onClick={() => deleteTeamMember()} type="button">
-                            {deleteTeamMemberForm.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Remove
-                        </Button>
+                        {deletingTeamMemberFor && deletingTeamMemberFor.user_id && (
+                            <Form
+                                {...destroy.form([team, { id: deletingTeamMemberFor.user_id }])}
+                                options={{ preserveScroll: true }}
+                                onSuccess={() => closeDeletingTeamMemberModal()}
+                            >
+                                {({ processing }) => (
+                                    <>
+                                        <Button disabled={processing} type="submit">
+                                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                            Remove
+                                        </Button>
+                                    </>
+                                )}
+                            </Form>
+                        )}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
