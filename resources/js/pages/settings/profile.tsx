@@ -12,13 +12,17 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
+interface ProfileProps {
+    mustVerifyEmail: boolean;
+}
+
+export default function Profile({ mustVerifyEmail }: ProfileProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Profile settings" />
 
             <SettingsLayout>
-                <UpdateProfileForm mustVerifyEmail={mustVerifyEmail} status={status} />
+                <UpdateProfileForm mustVerifyEmail={mustVerifyEmail} />
 
                 <DeleteUserForm />
             </SettingsLayout>

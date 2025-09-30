@@ -18,9 +18,7 @@ final class PasswordResetLinkController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('auth/forgot-password', [
-            'status' => $request->session()->get('status'),
-        ]);
+        return Inertia::render('auth/forgot-password');
     }
 
     /**
@@ -35,6 +33,6 @@ final class PasswordResetLinkController extends Controller
 
         $sendUserResetLink->handle($input);
 
-        return back()->with('status', __('A reset link will be sent if the account exists.'));
+        return back()->flash(__('A reset link will be sent if the account exists.'), variant: 'success');
     }
 }

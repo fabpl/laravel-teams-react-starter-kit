@@ -12,6 +12,12 @@ export interface BreadcrumbItem {
     href: string;
 }
 
+export interface Flash {
+    variant: 'default' | 'success' | 'info' | 'warning' | 'error';
+    title: string;
+    description?: string;
+}
+
 export interface NavGroup {
     title: string;
     items: NavItem[];
@@ -47,10 +53,11 @@ export interface PaginatedLink {
 }
 
 export interface SharedData {
+    auth: Auth;
     name: string;
     quote: { message: string; author: string };
-    auth: Auth;
     sidebarOpen: boolean;
+    flash: Flash | null;
     [key: string]: unknown;
 }
 

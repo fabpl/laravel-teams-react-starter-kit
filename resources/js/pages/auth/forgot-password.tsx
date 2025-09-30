@@ -4,12 +4,10 @@ import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/routes';
 import { Head } from '@inertiajs/react';
 
-export default function ForgotPassword({ status }: { status?: string }) {
+export default function ForgotPassword() {
     return (
         <AuthLayout title="Forgot password" description="Enter your email to receive a password reset link">
             <Head title="Forgot password" />
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
 
             <div className="space-y-6">
                 <ForgotPasswordForm />

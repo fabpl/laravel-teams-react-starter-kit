@@ -21,7 +21,7 @@ final class EmailVerificationNotificationController extends Controller
         $user = $request->user();
 
         if ($sendUserVerifyLink->handle($user)) {
-            return back()->with('status', 'verification-link-sent');
+            return back()->flash(__('A new verification link has been sent to your email address.'), variant: 'success');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));

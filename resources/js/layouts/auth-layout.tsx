@@ -1,3 +1,5 @@
+import ToasterProvider from '@/components/toaster-provider';
+import { Toaster } from '@/components/ui/sonner';
 import AuthLayoutTemplate from '@/layouts/auth/auth-simple-layout';
 import { ReactNode } from 'react';
 
@@ -9,8 +11,11 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ children, title, description, ...props }: AuthLayoutProps) {
     return (
-        <AuthLayoutTemplate title={title} description={description} {...props}>
-            {children}
-        </AuthLayoutTemplate>
+        <ToasterProvider>
+            <AuthLayoutTemplate title={title} description={description} {...props}>
+                {children}
+                <Toaster />
+            </AuthLayoutTemplate>
+        </ToasterProvider>
     );
 }

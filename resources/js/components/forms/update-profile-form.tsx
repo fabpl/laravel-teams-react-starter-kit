@@ -12,10 +12,9 @@ import { LoaderCircle } from 'lucide-react';
 
 interface UpdateProfileFormProps {
     mustVerifyEmail: boolean;
-    status?: string;
 }
 
-export default function UpdateProfileForm({ mustVerifyEmail, status }: UpdateProfileFormProps) {
+export default function UpdateProfileForm({ mustVerifyEmail }: UpdateProfileFormProps) {
     const { auth } = usePage<SharedData>().props;
 
     return (
@@ -77,12 +76,6 @@ export default function UpdateProfileForm({ mustVerifyEmail, status }: UpdatePro
                                         Click here to resend the verification email.
                                     </Link>
                                 </p>
-
-                                {status === 'verification-link-sent' && (
-                                    <div className="mt-2 text-sm font-medium text-green-600">
-                                        A new verification link has been sent to your email address.
-                                    </div>
-                                )}
                             </div>
                         )}
 

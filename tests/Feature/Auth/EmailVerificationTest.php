@@ -36,8 +36,6 @@ test('email verification notification can be sent', function () {
     $response = $this->actingAs($user)->post('/email/verification-notification');
 
     Notification::assertSentTo($user, VerifyEmail::class);
-
-    $response->assertSessionHas('status', 'verification-link-sent');
 });
 
 test('verified users can not be notified', function () {

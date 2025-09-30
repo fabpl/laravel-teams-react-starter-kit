@@ -49,8 +49,6 @@ final class HandleInertiaRequests extends Middleware
         $parent = parent::share($request);
 
         return array_merge($parent, [
-            'name' => config('app.name'),
-            'quote' => ['message' => mb_trim($message), 'author' => mb_trim($author)],
             'auth' => function () use ($request): array {
                 if (! $request->user()) {
                     return [
@@ -70,6 +68,22 @@ final class HandleInertiaRequests extends Middleware
                     'teams' => $user->teams,
                 ];
             },
+            'flash' => function () use ($request): ?array {
+                if (! $request->session()->has('flash')) {
+                    return null;
+                }
+
+                /** @var array<string, string> $flash */
+                $flash = $request->session()->get('flash');
+
+                return [
+                    'title' => $flash['title'],
+                    'description' => $flash['description'] ?? '',
+                    'variant' => $flash['variant'] ?? 'default',
+                ];
+            },
+            'name' => config('app.name'),
+            'quote' => ['message' => mb_trim($message), 'author' => mb_trim($author)],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ]);
     }

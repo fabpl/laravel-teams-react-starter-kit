@@ -19,8 +19,7 @@ use Illuminate\Support\Facades\URL;
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read string $accept_url
- * @property-read Team $team
- *
+ * @property-read \App\Models\Team $team
  * @method static \Database\Factories\TeamInvitationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newQuery()
@@ -31,7 +30,6 @@ use Illuminate\Support\Facades\URL;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 final class TeamInvitation extends Model

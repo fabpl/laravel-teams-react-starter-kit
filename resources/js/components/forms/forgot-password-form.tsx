@@ -8,7 +8,7 @@ import { LoaderCircle } from 'lucide-react';
 
 export default function ForgotPasswordForm() {
     return (
-        <Form {...email.form()}>
+        <Form {...email.form()} resetOnSuccess>
             {({ processing, errors }) => (
                 <>
                     <div className="grid gap-2">

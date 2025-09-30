@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -19,6 +20,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->configureCommands();
         $this->configureDates();
+        $this->configureFlashResponse();
         $this->configureModels();
         $this->configurePasswords();
         $this->configureUrls();
@@ -33,6 +35,18 @@ final class AppServiceProvider extends ServiceProvider
     private function configureDates(): void
     {
         Date::use(CarbonImmutable::class);
+    }
+
+    private function configureFlashResponse(): void
+    {
+        RedirectResponse::macro('flash', function (string $title, ?string $description = null, string $variant = 'default'): RedirectResponse {
+            /** @var RedirectResponse $this */
+            return $this->with('flash', [
+                'title' => $title,
+                'description' => $description,
+                'variant' => $variant,
+            ]);
+        });
     }
 
     private function configureModels(): void
