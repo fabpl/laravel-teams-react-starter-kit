@@ -1,6 +1,6 @@
+import InviteTeamMemberForm from '@/components/forms/invite-team-member-form';
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
-import InviteTeamMember from '@/components/invite-team-member';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -74,9 +74,9 @@ export default function Members({ team, members }: { team: Team; members: Pagina
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Members" description="Manage invitations and members." />
+                    <HeadingSmall title="Team members" description="Manage invitations and members." />
 
-                    {auth.permissions.includes('team-member.create') && <InviteTeamMember team={team} />}
+                    {auth.permissions.includes('team-member.create') && <InviteTeamMemberForm team={team} />}
 
                     {members.total > 0 && (
                         <>

@@ -39,7 +39,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
             title: 'Team',
             items: [
                 {
-                    title: 'Settings',
+                    title: 'General',
                     href: edit(auth.currentTeam).url,
                     icon: Settings2,
                 },

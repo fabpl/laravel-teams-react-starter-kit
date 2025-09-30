@@ -3,13 +3,11 @@ import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, Side
 import { type NavItem } from '@/types';
 import { type ComponentPropsWithoutRef } from 'react';
 
-export function NavFooter({
-    items,
-    className,
-    ...props
-}: ComponentPropsWithoutRef<typeof SidebarGroup> & {
+interface NavFooterProps {
     items: NavItem[];
-}) {
+}
+
+export function NavFooter({ items, className, ...props }: ComponentPropsWithoutRef<typeof SidebarGroup> & NavFooterProps) {
     return (
         <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}>
             <SidebarGroupContent>

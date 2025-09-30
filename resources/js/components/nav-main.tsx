@@ -2,7 +2,11 @@ import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, Sideba
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
-export function NavMain({ items = [] }: { items: NavItem[] }) {
+interface NavMainProps {
+    items: NavItem[];
+}
+
+export function NavMain({ items = [] }: NavMainProps) {
     const page = usePage();
 
     return (

@@ -4,11 +4,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { store } from '@/routes/team-invitations';
-import { Team } from '@/types';
+import { type Team } from '@/types';
 import { Form } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
-export default function InviteTeamMember({ team }: { team: Team }) {
+interface InviteTeamMemberFormProps {
+    team: Team;
+}
+
+export default function InviteTeamMemberForm({ team }: InviteTeamMemberFormProps) {
     return (
         <Form
             {...store.form(team)}

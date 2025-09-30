@@ -4,12 +4,12 @@ import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
-interface AuthLayoutProps {
+interface AuthSplitLayoutProps {
     title?: string;
     description?: string;
 }
 
-export default function AuthSplitLayout({ children, title, description }: PropsWithChildren<AuthLayoutProps>) {
+export default function AuthSplitLayout({ children, title, description }: PropsWithChildren<AuthSplitLayoutProps>) {
     const { name, quote } = usePage<SharedData>().props;
 
     return (
