@@ -2,13 +2,13 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { request } from '@/routes/password';
+import { email } from '@/routes/password';
 import { Form } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 export default function ForgotPasswordForm() {
     return (
-        <Form {...request.form()}>
+        <Form {...email.form()}>
             {({ processing, errors }) => (
                 <>
                     <div className="grid gap-2">

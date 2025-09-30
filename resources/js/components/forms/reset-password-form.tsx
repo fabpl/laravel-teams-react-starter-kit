@@ -15,7 +15,7 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordProps) 
     return (
         <Form
             {...store.form()}
-            transform={(data) => ({ ...data, token, email })}
+            transform={(data) => ({ ...data, token })}
             resetOnSuccess={['password', 'password_confirmation']}
             className="grid gap-6"
         >
@@ -23,7 +23,15 @@ export default function ResetPasswordForm({ token, email }: ResetPasswordProps) 
                 <>
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" name="email" autoComplete="email" className="mt-1 block w-full" readOnly />
+                        <Input
+                            defaultValue={email}
+                            id="email"
+                            type="email"
+                            name="email"
+                            autoComplete="email"
+                            className="mt-1 block w-full"
+                            readOnly
+                        />
                         <InputError message={errors.email} className="mt-2" />
                     </div>
 
