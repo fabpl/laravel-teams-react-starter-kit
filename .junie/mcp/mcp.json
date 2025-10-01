@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/opt/homebrew/Cellar/php@8.2/8.2.28_1/bin/php",
+            "args": [
+                "/Users/fplanchette/Projects/fabpl/laravel-teams-react-starter-kit/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
