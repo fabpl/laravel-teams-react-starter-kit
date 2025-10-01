@@ -52,6 +52,6 @@ final class UserFactory extends Factory
      */
     public function withTeam(TeamRoles $role = TeamRoles::ADMIN): static
     {
-        return $this->hasAttached(Team::factory(), ['role' => $role]);
+        return $this->hasAttached(Team::factory()->state(['name' => 'As '.$role->value]), ['role' => $role]);
     }
 }

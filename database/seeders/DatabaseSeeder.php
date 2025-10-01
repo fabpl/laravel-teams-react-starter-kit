@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -23,14 +24,26 @@ final class DatabaseSeeder extends Seeder
 
         $user->addMedia(UploadedFile::fake()->image('avatar.jpg'))->toMediaCollection('avatars');
 
-        /** @var \App\Models\Team $team */
+        /** @var Team $team */
         $team = $user->currentTeam;
 
         TeamInvitation::factory()->count(5)->for($team)->create();
 
-        User::factory()->count(5)->create()->each(function ($user) use ($team): void {
-            $team->users()->attach($user->id, [
+        User::factory()->count(5)->create()->each(function ($_user) use ($team): void {
+            $team->users()->attach($_user->id, [
                 'role' => 'collaborator',
+            ]);
+        });
+
+        Team::factory()->state(['name' => 'As Collaborator'])->count(1)->create()->each(function ($_team) use ($user): void {
+            $_team->users()->attach($user->id, [
+                'role' => 'collaborator',
+            ]);
+        });
+
+        Team::factory()->state(['name' => 'As Member'])->count(1)->create()->each(function ($_team) use ($user): void {
+            $_team->users()->attach($user->id, [
+                'role' => 'member',
             ]);
         });
     }

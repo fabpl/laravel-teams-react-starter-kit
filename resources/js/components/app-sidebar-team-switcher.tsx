@@ -55,23 +55,27 @@ export function AppSidebarTeamSwitcher() {
                                 )}
                             </DropdownMenuItem>
                         ))}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem asChild>
-                            <Link className="gap-2 p-2" href={edit(auth.currentTeam)} prefetch>
-                                <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                                    <Settings2 className="size-4" />
-                                </div>
-                                <div className="font-medium text-muted-foreground">Settings</div>
-                            </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <Link className="gap-2 p-2" href={create()} prefetch>
-                                <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                                    <Plus className="size-4" />
-                                </div>
-                                <div className="font-medium text-muted-foreground">Add team</div>
-                            </Link>
-                        </DropdownMenuItem>
+                        {(auth.permissions.includes('team.update') || auth.permissions.includes('team-member.create')) && <DropdownMenuSeparator />}
+                        {auth.permissions.includes('team.update') && (
+                            <DropdownMenuItem asChild>
+                                <Link className="gap-2 p-2" href={edit(auth.currentTeam)} prefetch>
+                                    <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                                        <Settings2 className="size-4" />
+                                    </div>
+                                    <div className="font-medium text-muted-foreground">Settings</div>
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
+                        {auth.permissions.includes('team-member.create') && (
+                            <DropdownMenuItem asChild>
+                                <Link className="gap-2 p-2" href={create()} prefetch>
+                                    <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                                        <Plus className="size-4" />
+                                    </div>
+                                    <div className="font-medium text-muted-foreground">Add team</div>
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>

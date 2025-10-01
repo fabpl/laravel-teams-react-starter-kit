@@ -8,6 +8,7 @@ enum TeamRoles: string
 {
     case ADMIN = 'admin';
     case COLLABORATOR = 'collaborator';
+    case MEMBER = 'member';
 
     /**
      * @return string[]
@@ -36,6 +37,7 @@ enum TeamRoles: string
                 TeamPermissions::TEAM_MEMBER_UPDATE,
                 TeamPermissions::TEAM_MEMBER_DELETE,
             ],
+            self::MEMBER => [],
         };
     }
 }
