@@ -76,6 +76,7 @@ final class TeamController extends Controller
     }
 
     /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws Throwable
      */
     public function destroy(TeamDestroyRequest $request, Team $team, DeleteTeamAction $deleteTeam): RedirectResponse

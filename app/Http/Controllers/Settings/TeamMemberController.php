@@ -35,6 +35,7 @@ final class TeamMemberController extends Controller
     }
 
     /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws Throwable
      */
     public function update(Request $request, Team $team, User $member, UpdateTeamMemberAction $updateTeamMember): RedirectResponse
@@ -53,6 +54,7 @@ final class TeamMemberController extends Controller
     }
 
     /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws Throwable
      */
     public function destroy(Request $request, Team $team, User $member, DeleteTeamMemberAction $deleteTeamMember): RedirectResponse

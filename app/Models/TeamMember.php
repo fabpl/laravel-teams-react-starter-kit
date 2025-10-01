@@ -9,6 +9,7 @@ use App\Enums\TeamRoles;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property int $id
  * @property int|null $invitation_id
  * @property int|null $team_id
  * @property int|null $user_id

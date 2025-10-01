@@ -13,6 +13,7 @@ use Throwable;
 final class DeleteTeamInvitationAction
 {
     /**
+     * @throws AuthorizationException
      * @throws Throwable
      */
     public function handle(User $user, TeamInvitation $invitation): void

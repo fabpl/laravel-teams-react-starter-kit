@@ -18,6 +18,7 @@ final class UpdateTeamMemberAction
     /**
      * @param  array<string, mixed>  $input
      *
+     * @throws AuthorizationException
      * @throws Throwable
      * @throws ValidationException
      */

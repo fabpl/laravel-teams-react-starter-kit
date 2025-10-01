@@ -16,6 +16,7 @@ use Throwable;
 final class TeamInvitationController extends Controller
 {
     /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws Throwable
      */
     public function store(Request $request, Team $team, CreateTeamInvitationAction $inviteTeamMember): RedirectResponse
@@ -34,6 +35,7 @@ final class TeamInvitationController extends Controller
     }
 
     /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws Throwable
      */
     public function destroy(Request $request, TeamInvitation $invitation, DeleteTeamInvitationAction $deleteTeamInvitation): RedirectResponse

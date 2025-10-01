@@ -22,6 +22,7 @@ final class CreateTeamInvitationAction
     /**
      * @param  array<string, mixed>  $input
      *
+     * @throws AuthorizationException
      * @throws Throwable
      * @throws ValidationException
      */
