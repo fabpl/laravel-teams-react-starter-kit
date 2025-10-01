@@ -9,10 +9,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { update } from '@/routes/current-team';
-import { create } from '@/routes/teams';
+import { create, edit } from '@/routes/teams';
 import type { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Check, ChevronsUpDown, Plus } from 'lucide-react';
+import { Check, ChevronsUpDown, Plus, Settings2 } from 'lucide-react';
 
 export function AppSidebarTeamSwitcher() {
     const { auth } = usePage<SharedData>().props;
@@ -56,6 +56,14 @@ export function AppSidebarTeamSwitcher() {
                             </DropdownMenuItem>
                         ))}
                         <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                            <Link className="gap-2 p-2" href={edit(auth.currentTeam)} prefetch>
+                                <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                                    <Settings2 className="size-4" />
+                                </div>
+                                <div className="font-medium text-muted-foreground">Settings</div>
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                             <Link className="gap-2 p-2" href={create()} prefetch>
                                 <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
