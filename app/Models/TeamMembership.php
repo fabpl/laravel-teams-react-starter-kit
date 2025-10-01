@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property TeamRoles $role
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMembership newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMembership newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMembership query()
+ *
  * @mixin \Eloquent
  */
 final class TeamMembership extends Pivot

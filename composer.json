@@ -14,7 +14,8 @@
         "inertiajs/inertia-laravel": "^2.0.10",
         "laravel/framework": "^12.32.5",
         "laravel/tinker": "^2.10.1",
-        "laravel/wayfinder": "^0.1.12"
+        "laravel/wayfinder": "^0.1.12",
+        "spatie/laravel-medialibrary": "^11.15"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",
@@ -45,7 +46,12 @@
         }
     },
     "scripts": {
+        "analyse": [
+            "phpstan --memory-limit=1G",
+            "pest --type-coverage --min=100 --memory-limit=1G"
+        ],
         "bump:minor": "composer update && composer bump",
+        "coverage": "pest --parallel --coverage --min=100",
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
@@ -55,6 +61,12 @@
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=server,queue,logs,ssr --kill-others"
         ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models -RW"
+        ],
+        "lint": "pint",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -70,19 +82,18 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
+        "refactor": "rector",
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "@php artisan db:seed --force"
+        ],
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ],
-        "lint": "pint",
-        "refactor": "rector",
-        "analyse": [
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:models -RW",
-            "phpstan --memory-limit=1G",
-            "pest --type-coverage --min=100 --memory-limit=1G"
-        ],
-        "coverage": "pest --parallel --coverage --min=100"
+        ]
     },
     "extra": {
         "laravel": {

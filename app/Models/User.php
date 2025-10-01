@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Throwable;
 
 /**
@@ -25,12 +27,15 @@ use Throwable;
  * @property string|null $remember_token
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \App\Models\Team|null $currentTeam
+ * @property-read Team|null $currentTeam
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\TeamMembership|null $membership
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
+ * @property-read TeamMembership|null $membership
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Team> $teams
  * @property-read int|null $teams_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -44,12 +49,13 @@ use Throwable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -96,6 +102,19 @@ final class User extends Authenticatable implements MustVerifyEmail
         $permissions = $this->teamPermissions($team);
 
         return in_array($permission, $permissions);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('avatars')
+            ->singleFile()
+            ->registerMediaConversions(function (): void {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(64)
+                    ->height(64);
+            });
     }
 
     /**

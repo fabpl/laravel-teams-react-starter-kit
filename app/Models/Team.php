@@ -14,13 +14,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TeamInvitation> $invitations
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TeamInvitation> $invitations
  * @property-read int|null $invitations_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TeamMember> $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TeamMember> $members
  * @property-read int|null $members_count
- * @property-read \App\Models\TeamMembership|null $membership
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read TeamMembership|null $membership
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newQuery()
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 final class Team extends Model

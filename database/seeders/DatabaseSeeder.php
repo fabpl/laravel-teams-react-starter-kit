@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\TeamInvitation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 
 final class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,8 @@ final class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $user->addMedia(UploadedFile::fake()->image('avatar.jpg'))->toMediaCollection('avatars');
 
         /** @var \App\Models\Team $team */
         $team = $user->currentTeam;

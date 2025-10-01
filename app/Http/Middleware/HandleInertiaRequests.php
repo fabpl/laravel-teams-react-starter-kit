@@ -62,7 +62,10 @@ final class HandleInertiaRequests extends Middleware
                 $user = $request->user();
 
                 return [
-                    'user' => $user->toArray(),
+                    'user' => [
+                        ...$user->toArray(),
+                        'avatar' => $user->getFirstMediaUrl('avatars', 'thumb'),
+                    ],
                     'currentTeam' => $user->teams->firstWhere('id', $user->current_team_id),
                     'permissions' => $user->currentTeam ? $user->teamPermissions($user->currentTeam) : [],
                     'teams' => $user->teams,

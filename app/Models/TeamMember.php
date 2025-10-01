@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property TeamMemberStatus|null $status
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember query()
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamMember whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 final class TeamMember extends Model

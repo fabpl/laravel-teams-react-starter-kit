@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Auth;
 
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -20,18 +21,25 @@ final class UpdateUserProfileAction
         /** @var array{name: string, email: string} $validated */
         $validated = $this->validate($user, $input);
 
-        $user->fill($validated);
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
         $user->save();
+
+        if (isset($input['avatar']) && $input['avatar'] instanceof UploadedFile) {
+            $user->addMedia($input['avatar'])->toMediaCollection('avatars');
+        }
     }
 
     /**
      * @param  array<string, mixed>  $input
-     * @return array{name: string, email: string}
+     * @return array{name: string, email: string, avatar?: UploadedFile}
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -48,6 +56,7 @@ final class UpdateUserProfileAction
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id),
             ],
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validate();
 
         return $validated;

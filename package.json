@@ -9,12 +9,13 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
+        "setup": "npm install && npm run build",
         "types": "tsc --noEmit"
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",
         "@laravel/vite-plugin-wayfinder": "^0.1.7",
-        "@types/node": "^22.18.7",
+        "@types/node": "^22.18.8",
         "eslint": "^9.36.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-react": "^7.37.5",
@@ -57,7 +58,7 @@
         "tailwind-merge": "^3.3.1",
         "tailwindcss": "^4.1.13",
         "tailwindcss-animate": "^1.0.7",
-        "typescript": "^5.9.2",
+        "typescript": "^5.9.3",
         "vite": "^6.3"
     },
     "optionalDependencies": {

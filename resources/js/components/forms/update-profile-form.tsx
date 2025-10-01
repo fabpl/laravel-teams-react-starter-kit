@@ -23,6 +23,7 @@ export default function UpdateProfileForm({ mustVerifyEmail }: UpdateProfileForm
 
             <Form
                 {...update.form()}
+                resetOnSuccess={['avatar']}
                 options={{
                     preserveScroll: true,
                 }}
@@ -30,6 +31,12 @@ export default function UpdateProfileForm({ mustVerifyEmail }: UpdateProfileForm
             >
                 {({ processing, recentlySuccessful, errors }) => (
                     <>
+                        <div className="grid gap-2">
+                            <Label htmlFor="avatar">Avatar</Label>
+                            <Input id="avatar" name="avatar" type="file" className="mt-1 block w-full" accept="image/*" />
+                            <InputError className="mt-2" message={errors.avatar} />
+                        </div>
+
                         <div className="grid gap-2">
                             <Label htmlFor="name">Name</Label>
 
