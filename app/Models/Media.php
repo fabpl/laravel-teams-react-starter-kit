@@ -32,32 +32,5 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property-read mixed $original_url
  * @property-read mixed $preview_url
  * @property-read mixed $type
- *
- * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> all($columns = ['*'])
- * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> get($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media ordered()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereCollectionName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereConversionsDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereCustomProperties($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereFileName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereGeneratedConversions($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereManipulations($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereMimeType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereOrderColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereResponsiveImages($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Media whereUuid($value)
- *
- * @mixin Eloquent
  */
 final class Media extends BaseMedia {}
